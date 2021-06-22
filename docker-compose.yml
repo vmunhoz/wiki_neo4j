@@ -16,7 +16,6 @@ services:
     build: '.'
     depends_on:
       - 'db'
-      - 'testdb'
     env_file:
       - '.env'
     ports:
@@ -25,7 +24,6 @@ services:
       - '.:/app'
     links:
       - 'db:db'
-      - 'testdb:testdb'
 
 volumes:
   db:
