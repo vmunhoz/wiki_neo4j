@@ -1,7 +1,11 @@
+from time import sleep
+
 from flask import Flask
+
 from flask_py2neo import Py2Neo
 
 db = Py2Neo()
+
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -16,4 +20,6 @@ def create_app(config=None):
 
     return app
 
+
+sleep(10)
 app = create_app()
