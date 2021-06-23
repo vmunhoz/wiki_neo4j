@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-RUN apk update && apk add git
+RUN apk update && apk add --no-cache gcc git python3-dev linux-headers musl-dev
 
 RUN mkdir /app
 WORKDIR /app
