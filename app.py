@@ -3,6 +3,7 @@ from time import sleep
 from flask import Flask
 
 from flask_py2neo import Py2Neo
+from blueprint import bp
 
 db = Py2Neo()
 
@@ -16,7 +17,7 @@ def create_app(config=None):
 
     db.init_app(app)
 
-    # app.register_blueprint(bp)
+    app.register_blueprint(bp)
 
     return app
 
