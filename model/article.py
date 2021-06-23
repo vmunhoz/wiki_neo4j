@@ -10,11 +10,3 @@ class Article(Model):
     text = Property()
 
     references = RelatedTo("Article")
-
-
-class Person(Model):
-    __primarykey__ = "name"
-
-    name = Property()
-
-    likes = RelatedTo(Article)

@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from flask_py2neo import Py2Neo
-from models import Article
+from model import Article
 
 db = Py2Neo()
 bp = Blueprint('bp', __name__)
