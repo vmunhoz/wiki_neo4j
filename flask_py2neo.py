@@ -24,12 +24,12 @@ class Py2Neo(object):
         app.config.setdefault("PY2NEO_USER", "neo4j")
         app.config.setdefault("PY2NEO_PASSWORD", "neo4j")
         config_params = {
-            "bolt": app.config["PY2NEO_BOLT"],
+            # "bolt": app.config["PY2NEO_BOLT"],
             "secure": app.config["PY2NEO_SECURE"],
             "host": app.config["PY2NEO_HOST"],
-            "http_port": app.config["PY2NEO_HTTP_PORT"],
-            "https_port": app.config["PY2NEO_HTTPS_PORT"],
-            "bolt_port": app.config["PY2NEO_BOLT_PORT"],
+            # "http_port": app.config["PY2NEO_HTTP_PORT"],
+            # "https_port": app.config["PY2NEO_HTTPS_PORT"],
+            # "bolt_port": app.config["PY2NEO_BOLT_PORT"],
             "user": app.config["PY2NEO_USER"],
             "password": app.config["PY2NEO_PASSWORD"],
         }
