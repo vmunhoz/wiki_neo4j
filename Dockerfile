@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-RUN apk update && apk add --no-cache gcc git python3-dev linux-headers musl-dev libffi-dev rust cargo openssl-dev
+RUN apk update && apk add --no-cache gcc python3-dev linux-headers musl-dev libffi-dev rust cargo openssl-dev
 
 RUN mkdir /app
 WORKDIR /app
