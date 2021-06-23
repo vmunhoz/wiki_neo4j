@@ -1,7 +1,7 @@
-from py2neo.ogm import GraphObject, Label, Property, RelatedFrom, RelatedTo
+from py2neo.ogm import Model, Label, Property, RelatedFrom, RelatedTo
 
 
-class Article(GraphObject):
+class Article(Model):
     __primarykey__ = "title"
 
     article = Label()
@@ -10,3 +10,11 @@ class Article(GraphObject):
     text = Property()
 
     references = RelatedTo("Article")
+
+
+class Person(Model):
+    __primarykey__ = "name"
+
+    name = Property()
+
+    likes = RelatedTo(Article)
