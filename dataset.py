@@ -20,3 +20,6 @@ def build_dataset(db):
 
     article1.references.add(article2)
     db.graph.push(article1)
+
+    article3.references.add(article1)
+    db.graph.push(article3)
