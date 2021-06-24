@@ -1,6 +1,5 @@
 from flask import Blueprint
 
-from neo4j import build_dataset
 from model import Article
 from neo4j import DBHandler
 
@@ -43,5 +42,5 @@ def article(title):
 
 @bp.route('/build_dataset/')
 def build_dataset_route():
-    build_dataset(DBHandler())
+    DBHandler().build_dataset()
     return "done!"

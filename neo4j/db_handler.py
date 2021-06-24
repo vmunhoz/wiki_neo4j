@@ -1,4 +1,4 @@
-from neo4j import Cypher
+from neo4j import Cypher, build_dataset
 from flask_api import Py2Neo
 from util import Singleton
 
@@ -21,5 +21,13 @@ class DBHandler(metaclass=Singleton):
         return self.match(model=article_obj, property=title).first()
 
     def get_all_referenced_articles_by_title(self, title: str):
-        query = f"MATCH (a:Article)-[r:REFERENCES]->(b:Article {{title:'{title}'}}) RETURN a.title"
+        query = f"""
+                MATCH (a:Article)-
+                    [r:REFERENCES]->
+                    (b:Article {{title:'{title}'}}) 
+                RETURN a.title
+                """
         return self.cypher.match(query)
+
+    def build_dataset(self):
+        build_dataset(self)
