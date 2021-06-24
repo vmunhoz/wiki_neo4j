@@ -1,11 +1,15 @@
 from __future__ import absolute_import
+
 from flask import current_app
 from py2neo import Graph
+
+from util import Singleton
 
 __version__ = "0.2.0"
 
 
-class Py2Neo(object):
+class Py2Neo(metaclass=Singleton):
+
     def __init__(self, app=None):
         self.app = app
         if app is not None:
@@ -45,7 +49,7 @@ class Py2Neo(object):
         if self.app is not None:
             return self.app
         raise RuntimeError(
-            "application not registered on db instance and no application"
+            "application not registered on neo4j instance and no application"
             "bound to current context"
         )
 

@@ -1,10 +1,9 @@
-from flask import Blueprint, app
+from flask import Blueprint
 
-from dataset import build_dataset
-from flask_py2neo import Py2Neo
+from neo4j import build_dataset
 from model import Article
+from neo4j import DBHandler
 
-db = Py2Neo()
 bp = Blueprint('bp', __name__)
 
 
@@ -13,15 +12,14 @@ def index():
     article = Article()
     article.title = "Python"
     article.text = "Melhor linguagem do mundo"
-
-    db.graph.push(article)
-
+    DBHandler().push(article)
     return "aoba"
 
 
 @bp.route('/article/<title>')
 def article(title):
-    article = Article.match(db.graph, title).first()
+    db_handler = DBHandler()
+    article = db_handler.get_article_by_title(Article, title)
     if article:
         html = f"<h1>{article.title}</h1><p>{article.text}</p>"
 
@@ -31,8 +29,7 @@ def article(title):
                 html += f"<li><a href='/article/{ref.title}'>{ref.title}</a></li>"
             html += "</ul>"
 
-        is_referenced_by = db.graph.run(f"MATCH (a:Article)-[r:REFERENCES]->(b:Article {{title:'{article.title}'}}) RETURN a.title").data()
-
+        is_referenced_by = db_handler.get_all_referenced_articles_by_title(title=article.title)
         if is_referenced_by:
             html += "<p>Is referenced by:</p>\n<ul>"
             for ref in is_referenced_by:
@@ -46,5 +43,5 @@ def article(title):
 
 @bp.route('/build_dataset/')
 def build_dataset_route():
-    build_dataset(db)
+    build_dataset(DBHandler())
     return "done!"
