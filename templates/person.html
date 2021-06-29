@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{{person.name}}</h1>
+{% endblock %}
+
+{% block content %}
+    <p>Likes:</p>
+    <ul>
+    {% for article in person.likes %}
+        <li><a href='/article/{{article.title}}'>{{article.title}}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -20,6 +20,9 @@ class DBHandler(metaclass=Singleton):
     def get_article_by_title(self, article_obj, title: str):
         return self.match(model=article_obj, property=title).first()
 
+    def get_person_by_name(self, person_obj, name: str):
+        return self.match(model=person_obj, property=name).first()
+
     def get_all_referenced_articles_by_title(self, title: str):
         query = f"""
                 MATCH (a:Article)-
