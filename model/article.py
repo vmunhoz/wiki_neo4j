@@ -10,4 +10,3 @@ class Article(Model):
     text = Property()
 
     references = RelatedTo("Article")
-    references = RelatedTo("Article")

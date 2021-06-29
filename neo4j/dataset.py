@@ -1,4 +1,5 @@
-from wiki_neo4j.model import Article, Person
+from model import Article, Person
+from py2neo.ogm import Model
 
 
 def build_dataset(db):
@@ -100,14 +101,14 @@ def build_dataset(db):
     # opensource.references.add(postgre, mariadb, mssqlserver, flockdb, cassandra, hbase, foundationdb, leveldb,
     # riak, couchdb, tokumx)
 
-    graphdb = Article
+    graphdb = Article()
     graphdb.title = "Graph database"
     graphdb.text = "In computing, a graph database (GDB) is a database that uses graph structures for semantic " \
                    "queries with nodes, edges, and properties to represent and store data."
     db.graph.push(graphdb)
     # graphdb.references.add(relationaldb, nosql, infinitegraph)
 
-    datawarehouse = Article
+    datawarehouse = Article()
     datawarehouse.title = "Data warehouse"
     datawarehouse.text = "In computing, a data warehouse (DW or DWH), also known as an enterprise data warehouse " \
                          "(EDW), is a system used for reporting and data analysis and is considered a core " \
@@ -378,7 +379,7 @@ def build_dataset(db):
     cloudant.text = "Cloudant is an IBM software product, which is primarily delivered as a cloud-based service. " \
                     "Cloudant is a non-relational, distributed database service of the same name. Cloudant is " \
                     "based on the Apache-backed CouchDB project and the open source BigCouch project."
-    db.graph.push()
+    db.graph.push(cloudant)
     # cloudant.references.add(nosql, documentdb, couchdb)
 
     couchdb = Article()
@@ -395,14 +396,14 @@ def build_dataset(db):
     simpledb.text = "Amazon SimpleDB is a distributed database written in Erlang by Amazon.com. " \
                     "It is used as a web service in concert with Amazon Elastic Compute Cloud (EC2) and " \
                     "Amazon S3 and is part of Amazon Web Services. It was announced on December 13, 2007."
-    db.graph.push()
+    db.graph.push(simpledb)
     # simpledb.references.add(nosql, documentdb, dynamodb)
 
     tokumx = Article()
     tokumx.title = "TokuMX"
     tokumx.text = "TokuMX is an open-source distribution of MongoDB which, among other things, replaces the " \
                   "default B-tree data structure found in the basic MongoDB distribution with a Fractal Tree index."
-    db.graph.push()
+    db.graph.push(tokumx)
     # tokumx.references.add(nosql, documentdb, mongodb)
 
     # Model
@@ -416,73 +417,141 @@ def build_dataset(db):
 
     # Article references
     # Relational
-    mysql.references.add(postgre, mariadb, relationaldb)
-    postgre.references.add(relationaldb, opensource)
-    oracle.references.add(datawarehouse, postgre, mongodb, neo4j)
-    mariadb.references.add(mysql, relationaldb, opensource)
-    relationaldb.references.add(oracle, mssqlserver, postgre, ibmdb2, sqlite, mariadb, msaccess, hive, teradata,
-                                msazure)
-    mssqlserver.references.add(msazure, opensource)
+    mysql.references.add(postgre)
+    mysql.references.add(mariadb)
+    mysql.references.add(relationaldb)
+    postgre.references.add(relationaldb)
+    postgre.references.add(opensource)
+    oracle.references.add(datawarehouse)
+    oracle.references.add(postgre)
+    oracle.references.add(mongodb)
+    oracle.references.add(neo4j)
+    mariadb.references.add(mysql)
+    mariadb.references.add(relationaldb)
+    mariadb.references.add(opensource)
+    relationaldb.references.add(oracle)
+    relationaldb.references.add(mssqlserver)
+    relationaldb.references.add(postgre)
+    relationaldb.references.add(ibmdb2)
+    relationaldb.references.add(sqlite)
+    relationaldb.references.add(mariadb)
+    relationaldb.references.add(msaccess)
+    relationaldb.references.add(hive)
+    relationaldb.references.add(teradata)
+    relationaldb.references.add(msazure)
+    mssqlserver.references.add(msazure)
+    mssqlserver.references.add(opensource)
     ibmdb2.references.add(relationaldb)
-    sqlite.references.add(relationaldb, postgre)
+    sqlite.references.add(relationaldb)
+    sqlite.references.add(postgre)
     msaccess.references.add(relationaldb)
     hive.references.add(relationaldb)
     teradata.references.add(relationaldb)
     msazure.references.add(relationaldb)
 
     # Others
-    opensource.references.add(postgre, mariadb, mssqlserver, flockdb, cassandra, hbase, foundationdb, leveldb, riak,
-                              couchdb, tokumx)
-    graphdb.references.add(relationaldb, nosql, infinitegraph)
-    datawarehouse.references.add()
+    opensource.references.add(postgre)
+    opensource.references.add(mariadb)
+    opensource.references.add(mssqlserver)
+    opensource.references.add(flockdb)
+    opensource.references.add(cassandra)
+    opensource.references.add(hbase)
+    opensource.references.add(foundationdb)
+    opensource.references.add(leveldb)
+    opensource.references.add(riak)
+    opensource.references.add(couchdb)
+    opensource.references.add(tokumx)
+    graphdb.references.add(relationaldb)
+    graphdb.references.add(nosql)
+    graphdb.references.add(infinitegraph)
+    # datawarehouse.references.add()
 
     # NoSQL
-    nosql.references.add(allegrograph, neptune, arangodb, cosmosdb, dexsparksee, flockdb, ibmdb2, infinitegraph,
-                         marklogic, neo4j,
-                         oracle, virtuoso, orientdb, mongodb, cassandra, hbase, dynamodb, aerospike, ignite,
-                         foundationdb, hazelcast,
-                         hibari, infinitydb, leveldb, oraclenosql, voldemort, redis, riak, rocksdb, basex, cloudant,
-                         couchdb, simpledb, tokumx)
+    add_references(nosql, [allegrograph, neptune, arangodb, cosmosdb, dexsparksee, flockdb, ibmdb2, infinitegraph,
+                  marklogic, neo4j,
+                  oracle, virtuoso, orientdb, mongodb, cassandra, hbase, dynamodb, aerospike, ignite,
+                  foundationdb, hazelcast,
+                  hibari, infinitydb, leveldb, oraclenosql, voldemort, redis, riak, rocksdb, basex, cloudant,
+                  couchdb, simpledb, tokumx])
+
     # Graph
-    allegrograph.references.add(nosql, graphdb)
-    neptune.references.add(nosql, graphdb)
-    arangodb.references.add(opensource, nosql, graphdb)
-    cosmosdb.references.add(nosql, graphdb)
-    dexsparksee.references.add(nosql, graphdb)
-    flockdb.references.add(nosql, graphdb, opensource)
-    infinitegraph.references.add(nosql, graphdb)
-    marklogic.references.add(nosql, datawarehouse, graphdb, mongodb)
-    neo4j.references.add(nosql, graphdb)
-    virtuoso.references.add(relationaldb, nosql, graphdb)
-    orientdb.references.add(nosql, graphdb)
+    allegrograph.references.add(nosql)
+    allegrograph.references.add(graphdb)
+    neptune.references.add(nosql)
+    neptune.references.add(graphdb)
+    arangodb.references.add(opensource)
+    arangodb.references.add(nosql)
+    arangodb.references.add(graphdb)
+    cosmosdb.references.add(nosql)
+    cosmosdb.references.add(graphdb)
+    dexsparksee.references.add(nosql)
+    dexsparksee.references.add(graphdb)
+    flockdb.references.add(nosql)
+    flockdb.references.add(graphdb)
+    flockdb.references.add(opensource)
+    infinitegraph.references.add(nosql)
+    infinitegraph.references.add(graphdb)
+    marklogic.references.add(nosql)
+    marklogic.references.add(datawarehouse)
+    marklogic.references.add(graphdb)
+    marklogic.references.add(mongodb)
+    neo4j.references.add(nosql)
+    neo4j.references.add(graphdb)
+    virtuoso.references.add(relationaldb)
+    virtuoso.references.add(nosql)
+    virtuoso.references.add(graphdb)
+    orientdb.references.add(nosql)
+    orientdb.references.add(graphdb)
     mongodb.references.add(nosql)
-    cassandra.references.add(nosql, opensource)
-    hbase.references.add(nosql, opensource, mongodb, dynamodb)
-    dynamodb.references.add(nosql, mongodb)
+    cassandra.references.add(nosql)
+    cassandra.references.add(opensource)
+    hbase.references.add(nosql)
+    hbase.references.add(opensource)
+    hbase.references.add(mongodb)
+    hbase.references.add(dynamodb)
+    dynamodb.references.add(nosql)
+    dynamodb.references.add(mongodb)
     # Key-value
-    keyvalue.references.add(aerospike, ignite, arangodb, foundationdb, hazelcast, hibari, infinitydb, leveldb,
-                            oraclenosql, voldemort, redis, riak, rocksdb, virtuoso)
-    redis.references.add(nosql, keyvalue)
-    aerospike.references.add(nosql, mongodb)
-    ignite.references.add(nosql, keyvalue)
-    foundationdb.references.add(nosql, keyvalue, opensource)
-    hazelcast.references.add(nosql, keyvalue)
-    hibari.references.add(nosql, keyvalue)
-    infinitydb.references.add(nosql, keyvalue)
-    leveldb.references.add(nosql, keyvalue, opensource)
-    keyvalue.references.add(nosql, keyvalue)
-    riak.references.add(nosql, keyvalue, opensource, dynamodb, leveldb)
-    rocksdb.references.add(nosql, keyvalue, leveldb)
-    oraclenosql.references.add(nosql, keyvalue)
+    add_references(keyvalue, [aerospike, ignite, arangodb, foundationdb, hazelcast, hibari, infinitydb, leveldb,
+                  oraclenosql, voldemort, redis, riak, rocksdb, virtuoso])
+
+    redis.references.add(nosql)
+    redis.references.add(keyvalue)
+    aerospike.references.add(nosql)
+    aerospike.references.add(mongodb)
+    ignite.references.add(nosql)
+    ignite.references.add(keyvalue)
+    foundationdb.references.add(nosql)
+    foundationdb.references.add(keyvalue)
+    foundationdb.references.add(opensource)
+    hazelcast.references.add(nosql)
+    hazelcast.references.add(keyvalue)
+    hibari.references.add(nosql)
+    hibari.references.add(keyvalue)
+    infinitydb.references.add(nosql)
+    infinitydb.references.add(keyvalue)
+    leveldb.references.add(nosql)
+    leveldb.references.add(keyvalue)
+    leveldb.references.add(opensource)
+    keyvalue.references.add(nosql)
+    keyvalue.references.add(keyvalue)
+    references = [nosql, keyvalue, opensource, dynamodb, leveldb]
+    for ref in references:
+        riak.references.add(ref)
+
+    add_references(rocksdb, [nosql, keyvalue, leveldb])
+    add_references(oraclenosql, [nosql, keyvalue])
     # Document
-    documentdb.references.add(nosql, graphdb, keyvalue, relationaldb, mongodb, aerospike, allegrograph, arangodb,
+    add_references(documentdb, [nosql, graphdb, keyvalue, relationaldb, mongodb, aerospike, allegrograph, arangodb,
                               cosmosdb, marklogic, virtuoso, oraclenosql, postgre, basex, cloudant, couchdb, simpledb,
-                              tokumx)
-    basex.references.add(nosql, documentdb)
-    cloudant.references.add(nosql, documentdb, couchdb)
-    couchdb.references.add(nosql, documentdb)
-    simpledb.references.add(nosql, documentdb, dynamodb)
-    tokumx.references.add(nosql, documentdb, mongodb)
+                              tokumx])
+    basex.references.add(nosql)
+    basex.references.add(documentdb)
+    add_references(cloudant, [nosql, documentdb, couchdb])
+    couchdb.references.add(nosql)
+    couchdb.references.add(documentdb)
+    add_references(simpledb, [nosql, documentdb, dynamodb])
+    add_references(tokumx, [nosql, documentdb, mongodb])
 
     # Person related to article
     hanay = Person()
@@ -522,15 +591,25 @@ def build_dataset(db):
     monica.name = "Monica"
 
     # Person
-    hanay.likes.add(dexsparksee, tokumx, aerospike, hibari, hazelcast)
-    henrique.likes.add(mysql, mssqlserver, marklogic, redis, ignite, leveldb, documentdb)
-    vinicius.likes.add(oracle, cosmosdb, mongodb, cassandra, voldemort, infinitydb, simpledb)
-    ricardo.likes.add(relationaldb, graphdb, datawarehouse, nosql, keyvalue)
-    fillipe.likes.add(arangodb, orientdb, hbase)
-    rodolfo.likes.add(opensource)
-    andre.likes.add(postgre, hive, riak)
-    ligia.likes.add(sqlite, neptune, foundationdb, rocksdb)
-    gabriel.likes.add(ibmdb2, teradata, dynamodb)
-    helio.likes.add(mariadb, virtuoso)
-    lais.likes.add(allegrograph, neo4j, flockdb, infinitegraph, basex)
-    monica.likes.add(msaccess, msazure, oraclenosql, cloudant, couchdb)
+    add_likes(hanay, [dexsparksee, tokumx, aerospike, hibari, hazelcast])
+    add_likes(henrique, [mysql, mssqlserver, marklogic, redis, ignite, leveldb, documentdb])
+    add_likes(vinicius, [oracle, cosmosdb, mongodb, cassandra, voldemort, infinitydb, simpledb])
+    add_likes(ricardo, [relationaldb, graphdb, datawarehouse, nosql, keyvalue])
+    add_likes(fillipe, [arangodb, orientdb, hbase])
+    add_likes(rodolfo, [opensource])
+    add_likes(andre, [postgre, hive, riak])
+    add_likes(ligia, [sqlite, neptune, foundationdb, rocksdb])
+    add_likes(gabriel, [ibmdb2, teradata, dynamodb])
+    add_likes(helio, [mariadb, virtuoso])
+    add_likes(lais, [allegrograph, neo4j, flockdb, infinitegraph, basex])
+    add_likes(monica, [msaccess, msazure, oraclenosql, cloudant, couchdb])
+
+
+def add_references(article: Article, references: list):
+    for ref in references:
+        article.references.add(ref)
+
+
+def add_likes(person: Person, likes: list):
+    for like in likes:
+        person.likes.add(like)
