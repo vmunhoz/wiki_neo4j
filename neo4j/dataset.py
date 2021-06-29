@@ -675,6 +675,6 @@ def add_references(article: Article, references: list):
         article.references.add(ref)
 
 
-def add_likes(person: Person, likes: list):
-    for like in likes:
-        person.likes.add(like, {'date': '1'})
+def add_likes(person: Person, articles: list):
+    for article in articles:
+        person.likes.add(article, {'date': '1'})
