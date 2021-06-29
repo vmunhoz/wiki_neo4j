@@ -1,4 +1,5 @@
 from py2neo.ogm import Model, Label, Property, RelatedFrom, RelatedTo
+from model.article import Article
 
 
 class Person(Model):
@@ -6,4 +7,4 @@ class Person(Model):
 
     name = Property()
 
-    likes = RelatedTo("Article")
+    likes = RelatedTo(Article)

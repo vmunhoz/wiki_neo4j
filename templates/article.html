@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{{article.title}}</h1>
+{% endblock %}
+
+{% block content %}
+    <p>{{article.text}}</p>
+
+    <p>References:</p>
+    <ul>
+    {% for ref in article.references %}
+        <li><a href='/article/{{ref.title}}'>{{ref.title}}</a></li>
+    {% endfor %}
+    </ul>
+
+    <p>Is referenced by:</p>
+    <ul>
+    {% for ref in is_referenced_by %}
+        <li><a href='/article/{{ref["a.title"]}}'>{{ref["a.title"]}}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
