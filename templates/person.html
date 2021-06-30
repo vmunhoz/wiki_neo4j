@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    {% block graph %}{% endblock %}
     <p>Likes:</p>
     <ul>
     {% for article in person.likes %}
