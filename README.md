@@ -15,3 +15,5 @@ It will start the following services:
 - Web server (flask application): http://localhost:5000
 
 Open the web server in your browser and have fun!
+
+![Image](https://raw.githubusercontent.com/vmunhoz/wiki_neo4j/main/screenshot.PNG)
