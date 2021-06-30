@@ -205,7 +205,7 @@ def build_dataset(db):
     # cosmosdb.references.add(nosql, graphdb)
 
     dexsparksee = Article()
-    dexsparksee.title = "DEX/Sparksee"
+    dexsparksee.title = "Sparksee"
     dexsparksee.text = "Sparksee (formerly known as DEX) is a high-performance and scalable graph database " \
                        "management system written in C++. "
 
