@@ -17,3 +17,8 @@ It will start the following services:
 Open the web server in your browser and have fun!
 
 ![Image](https://raw.githubusercontent.com/vmunhoz/wiki_neo4j/main/screenshot.PNG)
+
+## Contributors
+- Hanay Kamimura
+- Vinicius Jorge Munhoz
+- Henrique Pasquini Santos
