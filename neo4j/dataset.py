@@ -591,18 +591,23 @@ def build_dataset(db):
     monica.name = "Monica"
 
     # Person
-    add_likes(hanay, [dexsparksee, tokumx, aerospike, hibari, hazelcast])
-    add_likes(henrique, [mysql, mssqlserver, marklogic, redis, ignite, leveldb, documentdb])
-    add_likes(vinicius, [oracle, cosmosdb, mongodb, cassandra, voldemort, infinitydb, simpledb])
-    add_likes(ricardo, [relationaldb, graphdb, datawarehouse, nosql, keyvalue])
-    add_likes(fillipe, [arangodb, orientdb, hbase])
+    add_likes(hanay, [dexsparksee, tokumx, aerospike, hibari, hazelcast, nosql, redis, relationaldb, graphdb, neo4j,
+                      neptune, ibmdb2, teradata])
+    add_likes(henrique, [mysql, mssqlserver, marklogic, redis, ignite, leveldb, documentdb, nosql, relationaldb, hive,
+                         opensource, neo4j, ibmdb2, oracle])
+    add_likes(vinicius, [oracle, cosmosdb, mongodb, cassandra, voldemort, infinitydb, simpledb, neo4j, hive,
+                         infinitegraph, postgre, nosql, datawarehouse, teradata, oracle])
+    add_likes(ricardo, [relationaldb, graphdb, datawarehouse, nosql, keyvalue, riak, cassandra, redis,
+                        marklogic, ibmdb2, oracle])
+    add_likes(fillipe, [arangodb, orientdb, hbase, relationaldb, riak, neo4j, mongodb, teradata])
     add_likes(rodolfo, [opensource])
-    add_likes(andre, [postgre, hive, riak])
-    add_likes(ligia, [sqlite, neptune, foundationdb, rocksdb])
-    add_likes(gabriel, [ibmdb2, teradata, dynamodb])
-    add_likes(helio, [mariadb, virtuoso])
-    add_likes(lais, [allegrograph, neo4j, flockdb, infinitegraph, basex])
-    add_likes(monica, [msaccess, msazure, oraclenosql, cloudant, couchdb])
+    add_likes(andre, [postgre, hive, riak, cassandra, hazelcast, mongodb])
+    add_likes(ligia, [sqlite, neptune, foundationdb, rocksdb, tokumx, neo4j, cosmosdb])
+    add_likes(gabriel, [ibmdb2, teradata, dynamodb, voldemort, relationaldb, graphdb, neo4j, mongodb, arangodb, oracle])
+    add_likes(helio, [mariadb, virtuoso, relationaldb, riak, hibari, arangodb, foundationdb])
+    add_likes(lais, [allegrograph, neo4j, flockdb, infinitegraph, basex, graphdb, mssqlserver, mongodb,teradata])
+    add_likes(monica, [msaccess, msazure, oraclenosql, cloudant, couchdb, graphdb, relationaldb, mssqlserver, arangodb,
+                       cosmosdb, oracle])
 
     db.graph.push(mysql)
     db.graph.push(postgre)
