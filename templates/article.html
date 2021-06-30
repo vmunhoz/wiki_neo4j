@@ -24,7 +24,7 @@
     <p>Is liked by:</p>
     <ul>
     {% for person in is_liked_by %}
-        <li><a href='/person/{{person["p.name"]}}'>{{person["p.name"]}}</a></li>
+        <li><a href='/person/{{person["p.name"]}}'>{{person["p.name"]}}</a> (on {{person["l.date"]}})</li>
     {% endfor %}
     </ul>
 

@@ -37,7 +37,7 @@ class DBHandler(metaclass=Singleton):
                 MATCH (p:Person)-
                     [l:LIKES]->
                     (a:Article {{title: '{title}'}}) 
-                RETURN p.name
+                RETURN p.name, l.date
                 """
         return self.cypher.match(query)
 
