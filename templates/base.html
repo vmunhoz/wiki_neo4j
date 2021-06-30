@@ -2,17 +2,25 @@
 <head>
     {% block head %}{% endblock %}
 </head>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+
+<title>Wiki Neo4J - {% block title %}{% endblock %}</title>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 <nav>
-  <h1><a href="{{ url_for('bp.index') }}">Wiki Neo4j</a></h1>
+    <h1><a href="{{ url_for('bp.index') }}">Wiki Neo4j</a></h1>
 </nav>
+
 <section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    <hr>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p><i>Projeto desenvolvido por Hanay Kamimura, Henrique Santos e Vinicius Munhoz para o curso <b>Treinamento e Capacitação em Desenvolvimento de Aplicações de Uso Intensivo de Dados</b> (Serasa 2021-S1)</i></p>
+    </footer>
 </section>
