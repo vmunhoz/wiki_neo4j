@@ -1,5 +1,52 @@
 from model import Article, Person
-from py2neo.ogm import Model
+import random
+
+datetimes = [
+    '17 June 2016',
+    '16 February 2017',
+    '13 September 2020',
+    '25 November 2017',
+    '01 November 2018',
+    '09 June 2020',
+    '25 March 2017',
+    '24 January 2021',
+    '30 September 2019',
+    '09 February 2016',
+    '26 June 2018',
+    '02 March 2016',
+    '06 July 2018',
+    '19 March 2016',
+    '26 August 2019',
+    '21 February 2016',
+    '12 May 2018',
+    '20 January 2017',
+    '31 July 2019',
+    '27 November 2016',
+    '18 January 2019',
+    '06 January 2019',
+    '14 August 2019',
+    '03 July 2018',
+    '03 October 2018',
+    '07 November 2016',
+    '18 February 2020',
+    '28 March 2016',
+    '08 March 2016',
+    '21 April 2018',
+    '15 November 2016',
+    '24 July 2018',
+    '18 February 2021',
+    '27 March 2017',
+    '18 April 2016',
+    '06 June 2020',
+    '12 August 2018',
+    '29 March 2017',
+    '18 July 2018',
+    '27 November 2020',
+    '19 July 2020',
+    '13 June 2020',
+    '15 December 2019',
+    '12 February 20'
+]
 
 
 def build_dataset(db):
@@ -158,7 +205,7 @@ def build_dataset(db):
     # cosmosdb.references.add(nosql, graphdb)
 
     dexsparksee = Article()
-    dexsparksee.title = "DEX/Sparksee"
+    dexsparksee.title = "Sparksee"
     dexsparksee.text = "Sparksee (formerly known as DEX) is a high-performance and scalable graph database " \
                        "management system written in C++. "
 
@@ -464,7 +511,6 @@ def build_dataset(db):
     graphdb.references.add(relationaldb)
     graphdb.references.add(nosql)
     graphdb.references.add(infinitegraph)
-    # datawarehouse.references.add()
 
     # NoSQL
     add_references(nosql, [allegrograph, neptune, arangodb, cosmosdb, dexsparksee, flockdb, ibmdb2, infinitegraph,
@@ -680,6 +726,6 @@ def add_references(article: Article, references: list):
         article.references.add(ref)
 
 
-def add_likes(person: Person, likes: list):
-    for like in likes:
-        person.likes.add(like)
+def add_likes(person: Person, articles: list):
+    for article in articles:
+        person.likes.add(article, {'date': random.choice(datetimes)})

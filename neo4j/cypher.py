@@ -16,7 +16,10 @@ class Cypher:
     def match(self, query):
         try:
             match = self.graph.run(query)
-            return match.data()
+            result = match.data()
+            if not result:
+                return []
+            return result
         except Exception as exc:
             print(f'Error when running query: {query}. {str(exc)}')
-            return None
+            return []

@@ -1,4 +1,4 @@
-from py2neo.ogm import Model, Label, Property, RelatedFrom, RelatedTo
+from py2neo.ogm import Model, Label, Property, RelatedTo
 
 
 class Article(Model):
