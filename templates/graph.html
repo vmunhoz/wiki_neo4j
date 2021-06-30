@@ -8,6 +8,7 @@
 
         function draw() {
             var config = {
+                arrows: true,
                 container_id: "viz",
                 server_url: "bolt://localhost:7687",
                 server_user: "neo4j",
@@ -15,14 +16,23 @@
                 labels: {
                     "Article": {
                         "caption": "title",
+                        sizeCypher: "MATCH (n) WHERE id(n) = $id MATCH ()-[r]-(n) RETURN count(r) AS c"
+                    },
+                    "Person": {
+                        "caption": "name",
                     }
                 },
                 relationships: {
                     "REFERENCES": {
-                        "caption": false
+                        "caption": false,
+                        "thickness": "count"
+                    },
+                    "LIKES": {
+                        "caption": true,
+                        "thickness": "count"
                     }
                 },
-                initial_cypher: "MATCH (n)-[r:REFERENCES]->(m) RETURN *"
+                initial_cypher: "MATCH (n)-[r]->(m) RETURN *"
             };
 
             viz = new NeoVis.default(config);
@@ -53,7 +63,27 @@
 {% endblock %}
 
 {% block content %}
-    <body onload="draw()">
-        <div id="viz"></div>
-    </body>
+<body onload="draw()">
+    <div id="viz"></div>
+
+    <div class="list">
+        <h2>Articles:</h2>
+        <ul>
+        {% for article in articles %}
+            <li><a href='/article/{{article["a.title"]}}'>{{article["a.title"]}}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="list">
+        <h2>Persons:</h2>
+        <ul>
+        {% for person in persons %}
+            <li><a href='/person/{{person["a.name"]}}'>{{person["a.name"]}}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+</body>
+
 {% endblock %}

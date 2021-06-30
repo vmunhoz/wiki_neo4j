@@ -8,11 +8,10 @@ bp = Blueprint('bp', __name__)
 
 @bp.route('/')
 def index():
-    article = Article()
-    article.title = "Python"
-    article.text = "Melhor linguagem do mundo"
-    DBHandler().push(article)
-    return render_template('graph.html')
+    db_handler = DBHandler()
+    articles = db_handler.get_all_articles()
+    persons = db_handler.get_all_persons()
+    return render_template('graph.html', articles=articles, persons=persons)
 
 
 @bp.route('/article/<title>')

@@ -41,5 +41,19 @@ class DBHandler(metaclass=Singleton):
                 """
         return self.cypher.match(query)
 
+    def get_all_persons(self):
+        query = f"""
+                MATCH (a:Person)
+                RETURN a.name
+                """
+        return self.cypher.match(query)
+
+    def get_all_articles(self):
+        query = f"""
+                MATCH (a:Article)
+                RETURN a.title
+                """
+        return self.cypher.match(query)
+
     def build_dataset(self):
         build_dataset(self)
