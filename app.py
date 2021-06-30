@@ -18,6 +18,12 @@ def create_app(config=None):
 
     app.register_blueprint(bp)
 
+    @app.before_first_request
+    def function_to_run_only_once():
+        from neo4j import DBHandler
+        DBHandler().build_dataset()
+        print("dataset built!", flush=True)
+
     return app
 
 

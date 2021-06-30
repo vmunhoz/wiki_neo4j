@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, app
 
 from model import Article, Person
 from neo4j import DBHandler
