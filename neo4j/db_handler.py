@@ -32,5 +32,14 @@ class DBHandler(metaclass=Singleton):
                 """
         return self.cypher.match(query)
 
+    def get_people_who_liked_article(self, title: str):
+        query = f"""
+                MATCH (p:Person)-
+                    [l:LIKES]->
+                    (a:Article {{title: '{title}'}}) 
+                RETURN p.name
+                """
+        return self.cypher.match(query)
+
     def build_dataset(self):
         build_dataset(self)

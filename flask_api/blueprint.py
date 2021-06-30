@@ -21,9 +21,8 @@ def article(title):
     article = db_handler.get_article_by_title(Article, title)
     if article:
         is_referenced_by = db_handler.get_all_referenced_articles_by_title(title=article.title)
-        if is_referenced_by is None:
-            is_referenced_by = []
-        return render_template('article.html', article=article, is_referenced_by=is_referenced_by)
+        is_liked_by = db_handler.get_people_who_liked_article(title=article.title)
+        return render_template('article.html', article=article, is_referenced_by=is_referenced_by, is_liked_by=is_liked_by)
 
     return str(article)
 
